@@ -4,17 +4,13 @@ using UnityEngine;
 
 public class GravityManager
 {
-    private SpaceManager m_spaceManager = null;
     public GameObject planet = null;
-    float m_maximumInfluence = 150;
     private List<DeliberateScaler> m_spawnerScalers = new List<DeliberateScaler>();
     private List<DeliberateScaler> m_gravityWellScalers = new List<DeliberateScaler>();
     private List<ShockWave> m_activeShockwaves = new List<ShockWave>();
 
     public GravityManager(SpaceManager spaceManager, List<GameObject> spawners)
     {
-        m_spaceManager = spaceManager;
-
         foreach (GameObject spawner in spawners)
         {
             DeliberateScaler[] scalers = spawner.GetComponentsInChildren<DeliberateScaler>();

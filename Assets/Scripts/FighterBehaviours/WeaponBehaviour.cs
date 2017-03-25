@@ -55,7 +55,7 @@ namespace Assets.BHTree
         {                       
             if ((m_blackboard.target.transform.position - m_blackboard.parentObject.transform.position).magnitude <= m_weapon.range)
             {
-                // Debug.Log("Taking Aim (AnyKey to fire)");
+                // Debug.Log("Taking Aim (Debug.AnyKey to fire)");
                 if (Vector3.Angle(m_blackboard.target.transform.position - m_blackboard.parentObject.transform.position, m_blackboard.parentObject.transform.forward) < m_weapon.accuracy)
                 {
                         // Debug.Log("Target locked, Weapons Free");

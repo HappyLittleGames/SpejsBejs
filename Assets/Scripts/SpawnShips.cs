@@ -18,7 +18,7 @@ namespace Assets.Scripts
         [SerializeField] private float m_turnRate = 4;
         [SerializeField] private SpaceManager m_spaceManager = null;
         [SerializeField] private Text m_resourceText = null;
-        [SerializeField] private int m_health = 100;
+        [SerializeField] private int m_health = 10;
 
         private float m_resource = 30;
         private float m_resourceGatheringRate = 2;
@@ -36,7 +36,7 @@ namespace Assets.Scripts
 
             if (gameObject.transform.localScale.x > 1)
             {
-                m_resource = Mathf.Clamp(m_resource + Time.deltaTime * m_resourceGatheringRate, -3.0f, 50.0f);
+                m_resource = Mathf.Clamp(m_resource + Time.deltaTime * (m_resourceGatheringRate / Time.timeScale), -3.0f, 50.0f);
             }
             m_resourceText.text = Mathf.Round(m_resource).ToString();
             // Debug.Log(m_resource);
