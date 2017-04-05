@@ -29,7 +29,8 @@ public class Teams : MonoBehaviour
     }
 
 
-    public bool AddToTeam(GameObject teamObject) // do not call in update
+    /// do not call this in update
+    public bool AddToTeam(GameObject teamObject) 
     {
         if(m_teams.ContainsKey(teamObject.tag))
         {

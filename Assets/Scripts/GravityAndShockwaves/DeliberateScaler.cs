@@ -35,7 +35,6 @@ public class DeliberateScaler : MonoBehaviour
                 if (isGrowing)
                 {               
                     float scale = Mathf.Clamp(m_transform.localScale.x + Time.deltaTime * m_scalingRate * 1, m_minScale, m_maxScale);
-                    // scale *= Mathf.Clamp(m_transform.lossyScale.x, 1, 100);
                     m_transform.localScale = new Vector3(scale, scale, scale);                              
                 }
                 else

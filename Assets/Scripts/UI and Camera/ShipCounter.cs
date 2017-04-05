@@ -17,7 +17,7 @@ public class ShipCounter : MonoBehaviour {
 
         averagePosition = Vector3.zero;
 
-        // Ship management
+        // Ship tracker for global access
         m_countShips.BUpdate = () =>
             {
                 averagePosition = Vector3.zero;
@@ -41,7 +41,7 @@ public class ShipCounter : MonoBehaviour {
                         Destroy(explosion, 2f);
                         Destroy(fighter);
                         
-                        // Debug.Log("Trigger Eksplozion.");
+                        // Debug.Log("Trigger explosion.");
                     }
                     else
                     {
@@ -54,7 +54,7 @@ public class ShipCounter : MonoBehaviour {
                     averagePosition /= (fighterTeams[1].Count + fighterTeams[2].Count);
                 }
 
-                //try that freaky camera shit while we are at it?
+                //try that freaky camera shit while we are at it
 
                 return BHStatus.Success;
             };

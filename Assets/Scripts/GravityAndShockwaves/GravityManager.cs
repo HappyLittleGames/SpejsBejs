@@ -8,9 +8,12 @@ public class GravityManager
     private List<DeliberateScaler> m_spawnerScalers = new List<DeliberateScaler>();
     private List<DeliberateScaler> m_gravityWellScalers = new List<DeliberateScaler>();
     private List<ShockWave> m_activeShockwaves = new List<ShockWave>();
+    public SpaceManager spaceManager { get; private set; }
 
     public GravityManager(SpaceManager spaceManager, List<GameObject> spawners)
     {
+        this.spaceManager = spaceManager;
+
         foreach (GameObject spawner in spawners)
         {
             DeliberateScaler[] scalers = spawner.GetComponentsInChildren<DeliberateScaler>();
@@ -39,12 +42,12 @@ public class GravityManager
             if (!m_activeShockwaves[i].isActive)
                 m_activeShockwaves.RemoveAt(i);
             else
-                m_activeShockwaves[i].UpdateLifeTime(deltaTime);
+                m_activeShockwaves[i].UpdateLifeTime(deltaTime, spaceManager);
         }
     }
 
 
-    public Vector3 GetBlackHoleInfluenceAtPosition(Vector3 position, float power)
+    public Vector3 GetBlackHoleInfluenceAtPosition(Vector3 position, float power = 25000.0f)
     {
         Vector3 gravity = Vector3.zero;
 
@@ -80,7 +83,7 @@ public class GravityManager
     }
 
 
-    public void AddShockwave(GameObject entity, float lifeTime, float strength, float decay, float speed)
+    public void AddShockwave(GameObject entity, float lifeTime, float strength, float decay, float speed, int debrisAmount, Object sampleDebris)
     {
         if (m_activeShockwaves.Count >= 1)
         {
@@ -90,11 +93,11 @@ public class GravityManager
                     m_activeShockwaves.RemoveAt(i);
             }
         }
-        m_activeShockwaves.Add(new ShockWave(entity.transform.position, lifeTime, strength, decay, speed));
+        m_activeShockwaves.Add(new ShockWave(entity.transform.position, lifeTime, strength, decay, speed, this, debrisAmount, sampleDebris));
     }
 
 
-    public Vector3 GetShockwaveInfluenceAtPosition(Vector3 position, float power)
+    public Vector3 GetShockwaveInfluenceAtPosition(Vector3 position, float power = 1000.0f)
     {
         Vector3 force = Vector3.zero;
 
@@ -102,10 +105,13 @@ public class GravityManager
         {
             if (shockwave != null)
             {
-                if ((shockwave.location - position).magnitude > shockwave.WaveFrontOffset())
+                if ((shockwave.location - position).magnitude > 0.01f) // checking towards ourselves causes NaN vectors
                 {
-                    float gravityOverDistance = (-1 * shockwave.strength) / Vector3.SqrMagnitude((shockwave.location + (shockwave.location - position).normalized * shockwave.WaveFrontOffset() - position));
-                    force += (shockwave.location - position).normalized * gravityOverDistance;
+                    if ((shockwave.location - position).magnitude < shockwave.WaveFrontOffset())
+                    {
+                        float strength = (-1 * shockwave.strength);
+                        force += (shockwave.location - position).normalized * strength;
+                    }
                 }
             }
         }

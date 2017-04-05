@@ -88,7 +88,6 @@ namespace Assets.BHTree
             {
                 // Debug.Log("Targeting Wingman");
                 List<GameObject> sortedByRange = m_blackboard.GetFriendlies().OrderBy(x => Vector3.Distance(m_blackboard.parentObject.transform.position, x.transform.position)).ToList();
-                // because 0 is this, we go for 1. Pretty shitty
                 m_blackboard.wingMan = sortedByRange[1];
             }
             else

@@ -37,11 +37,11 @@ public class GyroCamera : MonoBehaviour
     {
         transform.rotation = Input.gyro.attitude;
 #if UNITY_ANDROID
-        transform.Rotate(0f, 0f, 180f, Space.Self); //Swap "handedness" ofquaternionfromgyro.
-        transform.Rotate(270f, 180f, 180f, Space.World); //Rotatetomakesenseasacamerapointingoutthebackofyourdevice.
+        transform.Rotate(0f, 0f, 180f, Space.Self); //Swap "handedness" of quaternion from gyro.
+        transform.Rotate(270f, 180f, 180f, Space.World); //Rotate to make sense as a camera pointing out the back of the device.
 #else
-        transform.Rotate(0f, 0f, 180f, Space.Self); //Swap "handedness" ofquaternionfromgyro.
-        transform.Rotate(90f, 180f, 0f, Space.World); //Rotatetomakesenseasacamerapointingoutthebackofyourdevice.
+        transform.Rotate(0f, 0f, 180f, Space.Self); //Swap "handedness" of quaternion from gyro.
+        transform.Rotate(90f, 180f, 0f, Space.World); //Rotate to make sense as a camera pointing out the back of the device.
 #endif
         appliedGyroYAngle = transform.eulerAngles.y; // Save the angle around y axis for use in calibration.
     }

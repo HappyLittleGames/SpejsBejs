@@ -13,6 +13,7 @@ public class SpaceManager : MonoBehaviour {
     [SerializeField] private GameObject m_planet = null;
     [SerializeField] private List<GameObject> m_spawners = null;
     [SerializeField] private  float m_blackHolePower = 25000;
+    [SerializeField] private GameObject m_sampleDebris = null;
     [SerializeField] private float m_explosionPower = 500;
     [SerializeField] private float m_timeScale = 1;
     public GravityManager gravityManager { get; private set; }
@@ -86,6 +87,10 @@ public class SpaceManager : MonoBehaviour {
                 scaler.isGrowing = !scaler.isGrowing;
             }
         }
+        if (Input.GetKeyDown(KeyCode.F8))
+        {
+            m_explosionPower = 0f;
+        }
     }
 
     private void UpdateCamera(float deltaTime)
@@ -151,7 +156,6 @@ public class SpaceManager : MonoBehaviour {
         if (m_planet != null)
         {
             Vector3 gravity = Vector3.zero;
-
             // and plain old planetary gravity
             {
                 float gravityOverDistance = m_gravityAtPlanet / Vector3.SqrMagnitude(m_planet.transform.position - myPosition);
@@ -164,18 +168,10 @@ public class SpaceManager : MonoBehaviour {
             // and the explosions
             gravity += gravityManager.GetShockwaveInfluenceAtPosition(myPosition, m_explosionPower);
 
-            //if (m_shockwaves.Count > 0)
-            //{
-            //    foreach (GameObject explosion in m_shockwaves)
-            //    {
-            //        if (explosion != null)
-            //            gravity += gravityManager.GetShockwaveInfluenceAtPosition(myPosition, m_explosionPower);
-            //    }
-            //}
-
-            // cap it a bit to prevent light-speed fighters :):)
-            gravity = Vector3.ClampMagnitude(gravity, 300);
-            return gravity;
+            // cap it a bit to prevent light-speed fighters :(
+            gravity = Vector3.ClampMagnitude(gravity, 3000);
+            //Debug.Log(gravity);
+            return gravity * Time.deltaTime;
         }
         else
             return Vector3.zero;
@@ -196,10 +192,12 @@ public class SpaceManager : MonoBehaviour {
 
     public void AddShockwave(GameObject entity)
     {
-        float lifeTime = 1.6f;
-        float decay = m_explosionPower * lifeTime;
-        float speed = 1.0f;
+        float lifeTime = 1.0f;
+        float decay = 0.67f * lifeTime;
+        float speed = 20.0f;
+        int debrisAmount = Random.Range(6, 24);
         // some less arbitrary values here maybe?
-        gravityManager.AddShockwave(entity, lifeTime, m_explosionPower, decay, speed);
+        gravityManager.AddShockwave(entity, lifeTime, m_explosionPower, decay, speed, debrisAmount, m_sampleDebris);
+
     }
 }

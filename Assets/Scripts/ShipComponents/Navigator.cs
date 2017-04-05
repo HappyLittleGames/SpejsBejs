@@ -21,6 +21,7 @@ namespace Assets.BHTree
 
         public void Navigate(float fixedDeltaTime)
         {
+            //these needs some more work
             //m_propulsion.Rotate("pitch", m_yoke);
             //m_propulsion.Rotate("yaw", m_yoke);
             m_propulsion.FakeRotate(destination, fixedDeltaTime);
@@ -40,7 +41,7 @@ namespace Assets.BHTree
             if (Vector3.Distance(destination, blackboard.parentObject.transform.position) <
                 Vector3.Distance(destination, blackboard.parentObject.transform.position + blackboard.parentObject.transform.forward * .01f))
             {
-                // some inaccuracy at 90+ degrees due to checking slightly in front of transform
+                // some inaccuracy at 90-95 degrees due to checking slightly in front of transform
                 // Debug.Log("testTarget is behind transform");
                 if (pitchAngle != 0)
                     pitchAngle = (pitchAngle > 0) ? (180 - pitchAngle) : (-180 + Mathf.Abs(pitchAngle));

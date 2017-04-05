@@ -48,23 +48,8 @@ public class Lazer : Weapon
         if (m_weaponVisuals)
             m_weaponVisuals.transform.localScale = new Vector3(0.6f, m_weaponVisuals.transform.localScale.y, 0.6f);
 
-        // dirty draw method
+        // dirty draw
         // DrawLine(start, direction.normalized * range, m_color);
     }
-
-    // Someguy McRandomperson's method from UnityAsk
-    //void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.1f)
-    //{
-    //    GameObject myLine = new GameObject();
-    //    myLine.transform.position = start;
-    //    myLine.AddComponent<LineRenderer>();
-    //    LineRenderer lr = myLine.GetComponent<LineRenderer>();
-    //    lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
-    //    lr.SetColors(color, color);
-    //    lr.SetWidth(0.5f, 0.5f);
-    //    lr.SetPosition(0, start);
-    //    lr.SetPosition(1, end);
-    //    GameObject.Destroy(myLine, duration);
-    //}
 }
 

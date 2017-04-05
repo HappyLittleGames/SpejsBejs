@@ -40,8 +40,8 @@ public class Fighter : MonoBehaviour
 
     void FixedUpdate()
     {
-        // let's see if fixed workes just as fine
         m_rigidbody.AddForce(spaceManager.GetGravity(m_rigidbody.position), ForceMode.Acceleration);
+        //Debug.Log((m_rigidbody.position));
         if (!manualOverride)
         {
             m_blackboard.navigator.Navigate(Time.fixedDeltaTime);
@@ -60,7 +60,7 @@ public class Fighter : MonoBehaviour
             weapon.Update(Time.deltaTime);
         }
 
-        // rip if over-G because we don't want litter basicly
+        // rip if over-G, mostly because we don't want litter really
         if (m_rigidbody.velocity.magnitude > m_speedLimit)
             isExploding = true;
     }
